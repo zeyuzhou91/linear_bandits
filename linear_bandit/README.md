@@ -1,1 +1,1 @@
-# PhD_thesis_code
+# Thompson sampling for linear bandits, a special case of Kalman filter
