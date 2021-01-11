@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # Set up model parameters
     N = 2        # dimension of the parameter space
     var_W = 0.1  # variance of the noise W
-    T = 100      # time horizon
+    T = 500      # time horizon
     
     N_simul = 1   # number of simulations
     
@@ -38,10 +38,11 @@ if __name__ == "__main__":
 
     ## plot   
     
-    plt.figure(1) 
+    plt.figure(2) 
     plt.plot(range(T), AVG_REG_TS, label='Thompson sampling')
     plt.legend()
     plt.grid()
     plt.xlabel('t')
     plt.ylabel('running average regret')
+    plt.title(r'$N =$' + str(N) + '  ' + r'$\sigma^2_W =$' + str(var_W))
     plt.show()

@@ -2,7 +2,7 @@ import numpy as np
 import scipy as sp
 import scipy.stats as st
 import auxiliary as aux
-
+import myplot
 
 
 class System:
@@ -11,7 +11,8 @@ class System:
         self.N = N          # dimension of the parameter space
         self.var_W = var_W  # variance of the noise W
         self.T = T          # time horizon       
-        self.theta_true = np.zeros(N)   # The true system parameter 
+        self.theta_true = np.zeros(N)   # The true system parameter
+        self.theta_hat = np.zeros(N)    # The sampled parameter 
         self.best_action = np.zeros(N)  # The best action
         self.best_reward = 0            # The expected reward corresponding to the best action
                 
@@ -131,9 +132,12 @@ class System:
         """
         
         for t in range(self.T):
-            if t % 1 == 0:
-                print(t)
-                 
+            #if t % 1 == 0:
+                #print(t)
+            
+            # plot the current states
+            myplot.plot_figures(self, t)
+               
             # select an action
             a = self.select_action(t)
             #print('Action:', a)

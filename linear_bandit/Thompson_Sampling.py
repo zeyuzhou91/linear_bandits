@@ -23,10 +23,10 @@ class System_TS(Game.System):
           a:   an action, a length-N numpy array 
         """
         
-        theta_hat = generate_parameter_sample(self)
-        #print('theta_hat:', theta_hat)
+        self.theta_hat = generate_parameter_sample(self)
+        #print('theta_hat:', self.theta_hat)
         
-        a = theta_hat/np.linalg.norm(theta_hat)
+        a = self.theta_hat/np.linalg.norm(self.theta_hat)
         #print('Actual Action:', a)
         return a 
     
@@ -43,14 +43,14 @@ class System_TS(Game.System):
         
         b = a.reshape(self.N, 1)  # reshape dimension-N array a into a dimension-(N,1) array to facilitate matrix operation
         
-        temp = float(b.T.dot(self.Sigma).dot(b) + self.var_W)
+        temp = float(b.T.dot(self.Sigma).dot(b)) + self.var_W
         #print('temp =', temp)
         
         self.gain = (self.Sigma.dot(b) / temp).reshape(self.N)
         #print('gain =', self.gain)
         
-        self.Sigma = self.Sigma - self.Sigma.dot(b).dot(b.T).dot(self.Sigma)
-        #print('Sigma =', self.Sigma)
+        self.Sigma = self.Sigma - self.Sigma.dot(b).dot(b.T).dot(self.Sigma) / temp
+        #print('trace(Sigma) =', np.trace(self.Sigma))
         
         self.theta_bar = self.theta_bar + self.gain * (obs - float(b.T.dot(self.theta_bar)))
         #print('theta_bar =', self.theta_bar)

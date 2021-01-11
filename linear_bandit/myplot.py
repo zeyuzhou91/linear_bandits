@@ -1,9 +1,12 @@
 import numpy as np
+import scipy.stats as st
 import matplotlib.pyplot as plt
 import auxiliary as aux
 
 
-colors = ['green', 'blue', 'orange', 'purple', 'gray', 'yellow']
+#colors = ['green', 'blue', 'orange', 'purple', 'gray', 'yellow']
+
+
 
 def plot_figures(G, t):
     """
@@ -15,27 +18,72 @@ def plot_figures(G, t):
     fig1 = plt.figure(1)
     plt.clf()  # clear the current figure
     plt.ion()  # without this, plt.show() will block the code execution
-    fig1.suptitle('time =' + str(t))
-        
-    ax1 = plt.subplot(131)  # position graph
-    plot_position_graph(G, t, ax1)
     
-    ax2 = plt.subplot(132)  # cumulative regret
-    plot_cumulative_regret(G, t, ax2)
+    xl = -1.0
+    xr = 1.0
+    yl = -1.0
+    yr = 1.0
 
-    ax3 = plt.subplot(133)  # fraction of time of pulling arm 1
-    plot_arm1_frac_graph(G, t, ax3)
+    # Plot the true theta
+    plt.scatter(G.theta_true[0], G.theta_true[1], c='red', s=100, alpha=1.0, label=r'$\theta^*$')
+    
+    # Plot the contour of the current posterior distribution
+    x, y = np.mgrid[xl:xr:.01, yl:yr:.01]
+    pos = np.dstack((x, y))
+    rv = st.multivariate_normal(G.theta_bar, G.Sigma)
+    plt.contourf(x, y, rv.pdf(pos), cmap='gray', alpha=0.6)
+    plt.scatter(G.theta_bar[0], G.theta_bar[1], c = 'green', label= r'$\bar{\theta}$')
+
+    # Plot the sampled theta
+    plt.scatter(G.theta_hat[0], G.theta_hat[1], c = 'blue', label= r'$\widehat{\theta}$')
+    
+    plt.xlim([xl, xr])
+    plt.ylim([yl, yr])    
+    plt.legend()
+    plt.xlabel(r'$\theta_1$')
+    plt.ylabel(r'$\theta_2$') 
+    plt.title('time =' + str(t))
+    plt.grid()     
     
     plt.show()
-    plt.pause(0.0001) 
+    plt.pause(0.001) 
     
-    if t % G.T_settle == 0:
-        fig2 = plt.figure(2)
-        plt.clf()  # clear the current figure
-        ax = fig2.add_subplot(111)
-        plot_divergence_graph(G, t, ax)
-
     return None
+
+
+
+
+#def plot_figures(G, t):
+    #"""
+    #Plot figures of the game G at time t.
+    
+    #t:    the round index, 0 <= t <= T-1. 
+    #"""
+    
+    #fig1 = plt.figure(1)
+    #plt.clf()  # clear the current figure
+    #plt.ion()  # without this, plt.show() will block the code execution
+    #fig1.suptitle('time =' + str(t))
+        
+    #ax1 = plt.subplot(131)  # position graph
+    #plot_position_graph(G, t, ax1)
+    
+    #ax2 = plt.subplot(132)  # cumulative regret
+    #plot_cumulative_regret(G, t, ax2)
+
+    #ax3 = plt.subplot(133)  # fraction of time of pulling arm 1
+    #plot_arm1_frac_graph(G, t, ax3)
+    
+    #plt.show()
+    #plt.pause(0.0001) 
+    
+    #if t % G.T_settle == 0:
+        #fig2 = plt.figure(2)
+        #plt.clf()  # clear the current figure
+        #ax = fig2.add_subplot(111)
+        #plot_divergence_graph(G, t, ax)
+
+    #return None
 
 
 def plot_position_graph(G, t, ax):
