@@ -28,6 +28,8 @@ class System_TS(Game.System):
         
         a = self.theta_hat/np.linalg.norm(self.theta_hat)
         #print('Actual Action:', a)
+        
+        #a = np.array([1.0, 0.0])
         return a 
     
     
