@@ -34,3 +34,16 @@ N_simul: the number of simulations to run, over which the average regret will be
 ### Open a terminal and run:
 
 python main.py
+
+## Simulations
+
+### One particular simulation with animated dynamics
+
+N = 2, var_W = 0.1
+
+Available on Youtube: https://youtu.be/z_GaRqiRd4k
+
+### The running average regret averaged over 100 simulations
+
+N = 10, var_W = 0.5
+
