@@ -47,3 +47,4 @@ Available on Youtube: https://youtu.be/z_GaRqiRd4k
 
 N = 10, var_W = 0.5
 
+![N=10](https://user-images.githubusercontent.com/4511007/104259449-0f3d0300-5447-11eb-9646-287f5b25023d.png)
