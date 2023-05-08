@@ -1,4 +1,4 @@
-# Thompson sampling for linear bandits, a special case of Kalman filter
+# Linear bandits
 
 This folder contains the simulation program of a linear bandit problem solved 
 by Thompson sampling, implemented as a special case of Kalman filter. 
